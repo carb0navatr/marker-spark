@@ -15,7 +15,7 @@ git remote add origin https://github.com/YOUR_USERNAME/marker.git
 
 ### 2. 首次推送到您的 fork
 ```bash
-git push -u origin main
+git push -u origin master
 ```
 
 ### 3. 验证 remotes 配置
@@ -34,17 +34,17 @@ git remote -v
 
 每当上游项目有更新时,按以下步骤同步:
 
-#### 方法 1: 直接合并到 main (推荐用于简单场景)
+#### 方法 1: 直接合并到 master (推荐用于简单场景)
 
 ```bash
-# 1. 切换到 main 分支
-git checkout main
+# 1. 切换到 master 分支
+git checkout master
 
 # 2. 从上游获取最新更改
 git fetch upstream
 
-# 3. 合并上游的 main 分支
-git merge upstream/main
+# 3. 合并上游的 master 分支
+git merge upstream/master
 
 # 4. 解决可能的冲突(如果有)
 # 编辑冲突文件,然后:
@@ -52,20 +52,20 @@ git merge upstream/main
 # git commit
 
 # 5. 推送到您的 fork
-git push origin main
+git push origin master
 ```
 
 #### 方法 2: 使用 rebase (保持提交历史更清晰)
 
 ```bash
-# 1. 切换到 main 分支
-git checkout main
+# 1. 切换到 master 分支
+git checkout master
 
 # 2. 从上游获取最新更改
 git fetch upstream
 
-# 3. rebase 到上游的 main 分支
-git rebase upstream/main
+# 3. rebase 到上游的 master 分支
+git rebase upstream/master
 
 # 4. 解决可能的冲突(如果有)
 # 编辑冲突文件,然后:
@@ -73,42 +73,42 @@ git rebase upstream/main
 # git rebase --continue
 
 # 5. 强制推送到您的 fork (注意: rebase 会改变历史)
-git push origin main --force-with-lease
+git push origin master --force-with-lease
 ```
 
 #### 方法 3: 使用功能分支 (推荐用于有自定义修改的场景)
 
 ```bash
-# 1. 从 main 创建同步分支
-git checkout main
+# 1. 从 master 创建同步分支
+git checkout master
 git checkout -b sync-upstream-YYYYMMDD
 
 # 2. 获取上游更新
 git fetch upstream
 
 # 3. 合并上游更改
-git merge upstream/main
+git merge upstream/master
 
 # 4. 解决冲突并测试
 
 # 5. 推送同步分支
 git push origin sync-upstream-YYYYMMDD
 
-# 6. 在 GitHub 上创建 Pull Request 将同步分支合并到 main
+# 6. 在 GitHub 上创建 Pull Request 将同步分支合并到 master
 # 这样可以在合并前进行代码审查
 
-# 7. PR 合并后,更新本地 main
-git checkout main
-git pull origin main
+# 7. PR 合并后,更新本地 master
+git checkout master
+git pull origin master
 ```
 
 ## 开发自己的功能
 
 ### 创建功能分支
 ```bash
-# 基于最新的 main 创建功能分支
-git checkout main
-git pull origin main
+# 基于最新的 master 创建功能分支
+git checkout master
+git pull origin master
 git checkout -b feature/your-feature-name
 ```
 
@@ -124,11 +124,11 @@ git push origin feature/your-feature-name
 
 ### 合并功能分支
 ```bash
-# 在 GitHub 上创建 Pull Request 合并到您 fork 的 main 分支
+# 在 GitHub 上创建 Pull Request 合并到您 fork 的 master 分支
 # 或者本地合并:
-git checkout main
+git checkout master
 git merge feature/your-feature-name
-git push origin main
+git push origin master
 ```
 
 ## 保持您的修改同时同步上游更新
@@ -139,15 +139,15 @@ git push origin main
 # 1. 确保您的修改在功能分支上
 git checkout feature/your-feature
 
-# 2. 更新 main 到最新的上游版本
-git checkout main
+# 2. 更新 master 到最新的上游版本
+git checkout master
 git fetch upstream
-git merge upstream/main
-git push origin main
+git merge upstream/master
+git push origin master
 
 # 3. 将上游更新 rebase 到您的功能分支
 git checkout feature/your-feature
-git rebase main
+git rebase master
 
 # 4. 解决冲突并推送
 git push origin feature/your-feature --force-with-lease
@@ -158,10 +158,10 @@ git push origin feature/your-feature --force-with-lease
 ```bash
 # 查看上游有哪些新提交
 git fetch upstream
-git log HEAD..upstream/main --oneline
+git log HEAD..upstream/master --oneline
 
 # 查看详细差异
-git diff HEAD..upstream/main
+git diff HEAD..upstream/master
 ```
 
 ## 常见问题
@@ -171,7 +171,7 @@ git diff HEAD..upstream/main
 git fetch upstream
 git status
 # 或者
-git log HEAD..upstream/main --oneline
+git log HEAD..upstream/master --oneline
 ```
 
 ### 如果同步时出现冲突怎么办?
@@ -199,12 +199,12 @@ git revert -m 1 HEAD
 echo "Fetching upstream changes..."
 git fetch upstream
 
-echo "Merging upstream/main..."
-git merge upstream/main
+echo "Merging upstream/master..."
+git merge upstream/master
 
 if [ $? -eq 0 ]; then
     echo "Merge successful! Pushing to origin..."
-    git push origin main
+    git push origin master
     echo "Sync completed!"
 else
     echo "Merge conflicts detected. Please resolve them manually."
@@ -221,7 +221,7 @@ chmod +x sync.sh
 ## 最佳实践
 
 1. **定期同步**: 建议每周或每次开发新功能前同步一次上游
-2. **使用分支**: 所有自定义开发都在功能分支上进行,保持 main 分支干净
+2. **使用分支**: 所有自定义开发都在功能分支上进行,保持 master 分支干净
 3. **测试后合并**: 同步上游更新后,先运行测试确保没有破坏性更改
 4. **记录修改**: 维护一个 CHANGELOG 或文档记录您的自定义修改
 5. **备份**: 在进行重大同步前,创建备份分支
